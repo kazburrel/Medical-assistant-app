@@ -16,13 +16,9 @@ createInertiaApp({
             `./Pages/${name}.vue`,
             import.meta.glob("./Pages/**/*.vue")
         );
-        if (name === "Welcome") {
-            page.default.layout = null;
-        } else {
-            page.default.layout =
-                page.default.layout ??
-                (typeof page.default.layout == null ? null : GuestLayout);
-        }
+        page.default.layout =
+            page.default.layout ??
+            (typeof page.default.layout == null ? null : GuestLayout);
         return page;
     },
     setup({ el, App, props, plugin }) {
