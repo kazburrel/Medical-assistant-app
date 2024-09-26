@@ -176,7 +176,7 @@ import { Link } from '@inertiajs/vue3';
                 <div class="container">
                     <div class="row text-md-start text-sm-center text-center">
                         <div class="col-md-6 d-flex justify-content-between">
-                            <div class="ab_card1" data-aos="flip-left">
+                            <div class="ab_card1">
                                 <h3>About</h3>
                                 <p class="p-f-s">Lorem Ipsum is simply dummy text of the printing and typesetting
                                     industry. Lorem
@@ -200,7 +200,7 @@ import { Link } from '@inertiajs/vue3';
                             </div>
                         </div>
                         <div class="col-md-6 d-flex justify-content-center mt-md-0 mt-sm-3 mt-3">
-                            <div class="ab_card2 d-flex flex-column justify-content-between" data-aos="flip-right">
+                            <div class="ab_card2 d-flex flex-column justify-content-between">
                                 <div>
                                     <div class="row gap-md-0 gap-sm-3 gap-3">
                                         <div class="col-md-5 col-sm-12 col-12 ">

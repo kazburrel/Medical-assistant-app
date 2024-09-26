@@ -15,7 +15,7 @@ import { Head, Link } from '@inertiajs/vue3';
                 corrupti. Odit natus illum fuga?</P>
             <div class="finanes-card row gap-md-0 gap-sm-4 gap-4">
                 <div class="col-lg-4 col-md-4 d-flex justify-content-center pe-lg-3 pe-md-0 pe-sm-3 pe-3">
-                    <div class="fin-card" data-aos="flip-up">
+                    <div class="fin-card">
                         <figure><img src="main_assets/images/icon/graphe.png" alt="praph"></figure>
                         <h4>Market Share</h4>
                         <p class="p-f-s">Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique dicta
@@ -25,7 +25,7 @@ import { Head, Link } from '@inertiajs/vue3';
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-4 d-flex justify-content-center pe-lg-3 pe-md-0 pe-sm-3 pe-3">
-                    <div class="fin-card" data-aos="flip-up">
+                    <div class="fin-card">
                         <figure> <img src="main_assets/images/icon/doller.png" alt="doller"></figure>
                         <h4>Easy Payment</h4>
                         <p class="p-f-s">Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore itaque nam
@@ -34,7 +34,7 @@ import { Head, Link } from '@inertiajs/vue3';
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-4 d-flex justify-content-center">
-                    <div class="fin-card" data-aos="flip-up">
+                    <div class="fin-card">
                         <figure><img src="main_assets/images/icon/arow.png" alt="arow"></figure>
                         <h4>Awesome Services</h4>
                         <p class="p-f-s">Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci rem quos
