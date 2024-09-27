@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, computed, provide } from 'vue';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
@@ -8,12 +8,24 @@ import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { Link } from '@inertiajs/vue3';
 
 const showingNavigationDropdown = ref(false);
+const isDarkMode = ref(false);
+
+const toggleDarkMode = () => {
+    isDarkMode.value = !isDarkMode.value;
+};
+
+const containerClass = computed(() => isDarkMode.value ? 'bg-dark text-white' : 'bg-light');
+const navClass = computed(() => isDarkMode.value ? 'bg-secondary border-bottom border-dark' : 'bg-white border-bottom border-light');
+const textClass = computed(() => isDarkMode.value ? 'text-white' : 'text-dark');
+const secondaryTextClass = computed(() => isDarkMode.value ? 'text-light' : 'text-secondary');
+
+provide('isDarkMode', isDarkMode);
 </script>
 
 <template>
     <div>
-        <div class="min-vh-100 bg-light">
-            <nav class="bg-white border-bottom border-light">
+        <div :class="['min-vh-100', containerClass]">
+            <nav :class="navClass">
                 <!-- Primary Navigation Menu -->
                 <div class="container-fluid px-4">
                     <div class="d-flex justify-content-between align-items-center" style="height: 4rem;">
@@ -28,20 +40,29 @@ const showingNavigationDropdown = ref(false);
 
                             <!-- Navigation Links -->
                             <div class="d-none d-sm-flex ms-3">
-                                <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                                <NavLink :href="route('dashboard')" :active="route().current('dashboard')"
+                                    :class="textClass">
                                     Dashboard
                                 </NavLink>
                             </div>
                         </div>
 
-                        <div class="d-none d-sm-flex align-items-center ms-3">
+                        <!-- Dark Mode Toggle and Settings Dropdown -->
+                        <div class="d-flex align-items-center ms-3">
+                            <!-- Dark Mode Toggle -->
+                            <button @click="toggleDarkMode"
+                                :class="['btn me-2', isDarkMode ? 'btn-outline-light' : 'btn-outline-secondary']">
+                                <i :class="isDarkMode ? 'fa-solid fa-sun text-white' : 'fa-solid fa-moon'"></i>
+                            </button>
+
                             <!-- Settings Dropdown -->
                             <div class="position-relative">
                                 <Dropdown align="right" width="48">
                                     <template #trigger>
                                         <span class="d-inline-flex rounded">
                                             <button type="button"
-                                                class="d-inline-flex align-items-center px-3 py-2 border-0 text-sm font-medium rounded text-secondary bg-white hover-text-dark focus-outline-none transition">
+                                                class="d-inline-flex align-items-center px-3 py-2 border-0 text-sm font-medium rounded"
+                                                :class="[textClass, 'bg-white hover-text-dark focus-outline-none transition']">
                                                 {{ $page.props.auth.user.name }}
 
                                                 <svg class="ms-2 me-0" style="height: 1rem; width: 1rem;"
@@ -56,8 +77,10 @@ const showingNavigationDropdown = ref(false);
                                     </template>
 
                                     <template #content>
-                                        <DropdownLink :href="route('profile.edit')"> Profile </DropdownLink>
-                                        <DropdownLink :href="route('logout')" method="post" as="button">
+                                        <DropdownLink :href="route('profile.edit')" :class="textClass"> Profile
+                                        </DropdownLink>
+                                        <DropdownLink :href="route('logout')" method="post" as="button"
+                                            :class="textClass">
                                             Log Out
                                         </DropdownLink>
                                     </template>
@@ -90,23 +113,26 @@ const showingNavigationDropdown = ref(false);
                 <div :class="{ 'd-block': showingNavigationDropdown, 'd-none': !showingNavigationDropdown }"
                     class="d-sm-none">
                     <div class="pt-2 pb-3">
-                        <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                        <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')"
+                            :class="textClass">
                             Dashboard
                         </ResponsiveNavLink>
                     </div>
 
                     <!-- Responsive Settings Options -->
-                    <div class="pt-4 pb-1 border-top border-light">
+                    <div class="pt-4 pb-1 border-top ">
                         <div class="px-4">
-                            <div class="font-weight-medium text-dark">
+                            <div :class="['font-weight-medium', textClass]">
                                 {{ $page.props.auth.user.name }}
                             </div>
-                            <div class="font-weight-medium text-secondary">{{ $page.props.auth.user.email }}</div>
+                            <div :class="['font-weight-medium', secondaryTextClass]">{{ $page.props.auth.user.email }}
+                            </div>
                         </div>
 
                         <div class="mt-3">
-                            <ResponsiveNavLink :href="route('profile.edit')"> Profile </ResponsiveNavLink>
-                            <ResponsiveNavLink :href="route('logout')" method="post" as="button">
+                            <ResponsiveNavLink :href="route('profile.edit')" :class="textClass"> Profile
+                            </ResponsiveNavLink>
+                            <ResponsiveNavLink :href="route('logout')" method="post" as="button" :class="textClass">
                                 Log Out
                             </ResponsiveNavLink>
                         </div>
