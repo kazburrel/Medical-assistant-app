@@ -1,5 +1,5 @@
 <script setup>
-import { Link } from '@inertiajs/vue3';
+
 </script>
 
 <template>
@@ -253,7 +253,7 @@ import { Link } from '@inertiajs/vue3';
         <footer class="position-relative">
             <div class="container">
                 <h4 class="text-center">SUBSCRIBE OUR NEWSLETTER</h4>
-                <P class="text-center pt-2 pb-3">Get latest News and Updates</P>
+                <p class="text-center pt-2 pb-3">Get latest News and Updates</p>
                 <form class="d-flex align-items-center justify-content-center" id="footer-sub2">
                     <!-- form Subscribe massage -->
                     <div id="Succes-box2"></div>
@@ -301,23 +301,7 @@ import { Link } from '@inertiajs/vue3';
                             <a href="#">Privacy Policy</a>
                         </div>
                     </div>
-                    <!-- footer logo slider  -->
-                    <div class="col-lg-3 col-md-3">
-                        <div class="footer_ispsum_slider">
-                            <figure><a href="#"><img src="main_assets/images/icon/logoipsum-228.png" alt="qr-code"></a>
-                            </figure>
-                            <figure><a href="#"><img src="main_assets/images/icon/logoipsum-233.png" alt="qr-code"></a>
-                            </figure>
-                            <figure><a href="#"><img src="main_assets/images/icon/logoipsum-229.png" alt="qr-code"></a>
-                            </figure>
-                            <figure><a href="#"><img src="main_assets/images/icon/logoipsum-228.png" alt="qr-code"></a>
-                            </figure>
-                            <figure><a href="#"><img src="main_assets/images/icon/logoipsum-233.png" alt="qr-code"></a>
-                            </figure>
-                            <figure><a href="#"><img src="main_assets/images/icon/logoipsum-229.png" alt="qr-code"></a>
-                            </figure>
-                        </div>
-                    </div>
+
                 </div>
                 <hr>
                 <div class="Copyright d-flex justify-content-between flex-wrap dir">
