@@ -1,7 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head, useForm } from '@inertiajs/vue3';
-import { inject } from 'vue';
+import { Head, useForm, usePage } from '@inertiajs/vue3';
+import { inject, ref, watchEffect } from 'vue';
 
 defineOptions({ layout: AuthenticatedLayout });
 
@@ -10,13 +10,46 @@ const form = useForm({
 });
 
 const submitPrompt = () => {
+    isSubmitting.value = true;
     form.post(route('submit.prompt'), {
-        onFinish: () => form.reset('prompt'),
+        onFinish: () => {
+            form.reset('prompt');
+            isSubmitting.value = false;
+        },
     });
 };
 
 // Inject the isDarkMode state from the layout
 const isDarkMode = inject('isDarkMode');
+
+// Define the missing properties
+const isSubmitting = ref(false);
+
+// Access the page props
+const props = defineProps({
+    content: String
+});
+
+// Typing effect for content
+const displayedContent = ref('');
+let typingIndex = 0;
+
+watchEffect(() => {
+    if (props.content) {
+        displayedContent.value = '';
+        typingIndex = 0;
+        typeContent();
+    }
+});
+
+const typeContent = () => {
+    if (typingIndex < props.content.length) {
+        displayedContent.value += props.content.charAt(typingIndex);
+        typingIndex++;
+        setTimeout(typeContent, 50); // Adjust typing speed here
+    }
+};
+
 </script>
 
 <template>
@@ -60,27 +93,31 @@ const isDarkMode = inject('isDarkMode');
                                     padding: '1rem',
                                     borderRadius: '0.25rem'
                                 }">
-                                    <div class="chat-message mb-2 d-flex justify-content-end">
-                                        <div
-                                            :class="['p-2 rounded', isDarkMode ? 'bg-primary text-white' : 'bg-primary text-white']">
-                                            Hello, how can I help you?
+                                    <div v-if="form.prompt">
+                                        <div class="chat-message mb-2 d-flex justify-content-end">
+                                            <div
+                                                :class="['p-2 rounded', isDarkMode ? 'bg-primary text-white' : 'bg-primary text-white']">
+                                                {{ form.prompt }}
+                                            </div>
+                                        </div>
+                                        <div v-if="displayedContent"
+                                            class="chat-message mb-2 d-flex justify-content-start align-items-center">
+                                            <img src="main_assets/images/Logo.png" alt="Project Logo" class="me-2"
+                                                style="height: 1.5rem;">
+                                            <div
+                                                :class="['p-2 rounded', isDarkMode ? 'bg-secondary text-white' : 'bg-secondary text-white']">
+                                                <span>{{ displayedContent }}</span>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="chat-message mb-2 d-flex justify-content-start align-items-center">
-                                        <img src="main_assets/images/Logo.png" alt="Project Logo" class="me-2"
-                                            style="height: 1.5rem;">
-                                        <div
-                                            :class="['p-2 rounded', isDarkMode ? 'bg-secondary text-white' : 'bg-secondary text-white']">
-                                            <span>I need assistance with my account.</span>
-                                        </div>
-                                    </div>
-                                    <!-- More chat messages can be added here -->
                                 </div>
                                 <form @submit.prevent="submitPrompt" class="mt-3 d-flex">
                                     <input type="text" v-model="form.prompt" class="form-control me-2"
                                         :class="isDarkMode ? 'bg-dark text-white' : ''"
-                                        placeholder="Type your message here..." required />
-                                    <button type="submit" class="btn btn-primary" :disabled="!form.prompt">
+                                        placeholder="Type your message here..." required :disabled="isSubmitting"
+                                        @keyup.enter="isSubmitting ? $event.preventDefault() : submitPrompt()" />
+                                    <button type="submit" class="btn btn-primary"
+                                        :disabled="!form.prompt || isSubmitting">
                                         <i class="fa-solid fa-paper-plane"></i>
                                     </button>
                                 </form>
