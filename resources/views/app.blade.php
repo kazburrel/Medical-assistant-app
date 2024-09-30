@@ -40,11 +40,11 @@
 <body class="font-sans antialiased">
     @inertia
 
-    <!-- button back to top -->
+
     <button onclick="scrollToTop()" id="backToTopBtn"><i class="fa-solid fa-arrow-turn-up"></i></button>
-    <!-- bootstrap min javascript -->
+
     <script src="{{ asset('main_assets/js/javascript-lib/bootstrap.min.js') }}"></script>
-    <!-- j Query -->
+
     <script src="{{ asset('main_assets/js/jquery.js') }}"></script>
     <!-- slick slider js -->
     <script src="{{ asset('main_assets/js/slick.min.js') }}"></script>
