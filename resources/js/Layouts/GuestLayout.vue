@@ -5,314 +5,244 @@
 <template>
 
 
-    <div class="site-wrapper">
-        <div class="first_nav_hero_about">
-            <!-- ======== 1.1. header section ======== -->
-            <header>
-                <nav class="container navbar navbar-expand-lg ">
-                    <div class="container-fluid">
-                        <!-- site logo -->
-                        <a class="nav-logo p-0" href="index.html"><img src="main_assets/images/Logo.png" alt="logo"></a>
-                        <!-- navigation button  -->
-                        <button class="navbar-toggle" onclick="openNav()" type="button"
-                            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation">
-                            <i class="fa-solid fa-bars"></i>
-                        </button>
-                        <!-- navigation bar manu  -->
-                        <div class="collapse navbar-collapse " id="navbarSupportedContent">
-                            <ul
-                                class="navbar-nav d-flex justify-content-center align-items-center gap-lg-2 gap-md-2 gap-sm-2 gap-2 mb-2 mb-lg-0">
-                                <li class="nav-item">
-                                    <a class="nav-link active" href="index.html">Home</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="about.html">About us</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="feature.html">Feature</a>
-                                </li>
-                                <li class="dropdown">
-                                    <a class="nav-link " href="#">Pages <i
-                                            class="fa-sharp fa-solid fa-sort-down"></i></a>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="pricing.html">Pricing</a></li>
-                                        <li><a class="dropdown-item" href="contact.html">Contact</a></li>
-                                        <li><a class="dropdown-item" href="team.html">Team</a></li>
-                                        <li><a class="dropdown-item" href="testimonials.html">Testimonials</a></li>
-                                        <li><a class="dropdown-item" href="blogs.html">Blogs</a></li>
-                                        <li><a class="dropdown-item" href="faq.html">FAQ</a></li>
-                                        <li><a class="dropdown-item" href="404.html">404</a></li>
-                                        <li><a class="dropdown-item" href="coming.html">Coming Soon</a></li>
-                                    </ul>
-                                </li>
-                                <li class="nav-item">
-                                    <a id="search-bar-bt" class="nav-link" href="#"><i
-                                            class="fa-solid fa-magnifying-glass"></i></a>
-                                </li>
-                                <li class="nav-item header_btn ">
-                                    <a class="nav-link nav-hrf btn-hover1" href="#">Create Account</a>
-                                </li>
-                                <li class="nav-item" onclick="open_right_side()">
-                                    <a class="nav-link" href="#"><i class="fa-sharp fa-solid fa-bars"></i></a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </nav>
-                <!--============ navigation left slidebar================-->
-                <aside>
-                    <div id="mySidenav" class="sidenav">
-                        <div class="side-nav-logo d-flex justify-content-between align-items-center ps-4 pe-3">
-                            <figure class="navbar-brand"><a href="index.html"><img src="main_assets/images/Logo.png"
-                                        alt="img" class="nav-logo"></a></figure>
-                            <div class="closebtn" onclick="closeNav()"><i
-                                    class="fa-solid fa-square-xmark side-bar-close-btn"></i></div>
-                        </div>
-                        <ul>
-                            <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="index.html">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="about.html">About</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="feature.html">Feature</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="pricing.html">Pricing</a>
-                            </li>
-                            <li class="nav-item">
-                                <div class="d-flex align-items-center justify-content-between pt-3" id="slid-btn">
-                                    <button class="a-slid">Pages</button>
-                                    <i class="fa-solid fa-caret-down pe-4"></i>
-                                </div>
-                                <ul id="slid-drop" class="myst">
-                                    <li><a href="contact.html">Contact</a></li>
-                                    <li><a href="team.html">Team</a></li>
-                                    <li><a href="testimonials.html">Testimonials</a></li>
-                                    <li><a href="blogs.html">Blogs</a></li>
-                                    <li><a href="faq.html">FAQ</a></li>
-                                    <li><a href="404.html">404</a></li>
-                                    <li><a href="coming.html">Coming Soon</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-                </aside>
-                <!--================== navigation drop search bar================-->
-                <div class="search" id="search-bar">
-                    <form class="d-flex nav-search">
-                        <input type="text" name="search" placeholder="Enter your text">
-                        <button class="btn-hover1" type="submit">Search</button>
-                    </form>
-                    <button id="remove-btn">
-                        <i class="fa-solid fa-square-xmark "></i>
-                    </button>
-                </div>
-                <!--=================navigation Right slidebar==================-->
-                <section class="right-sidbar" id="right_side">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <!-- site logo -->
-                        <a class="p-0 " href="index.html"><img src="main_assets/images/Logo.png" alt="logo"></a>
-                        <button class="close_right_sidebar fa-solid fa-xmark" onclick="close_right_sade()">
-                        </button>
-                    </div>
-                    <p class="mt-4 pb-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore
-                        magna aliqua.
-                    </p>
-                    <a href="#" class="btn-hover1">Discover More</a>
-                    <hr>
-                    <h5 class="mt-4 mb-4">Connected details:</h5>
-                    <ul class="d-flex flex-column gap-3">
-                        <li>
-                            <a href="#"> <i class="fa-solid fa-phone"></i></a>
-                            <a href="#">yourname@email.com</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa-solid fa-envelope"></i></a>
-                            <a href="#">+123-456-7890</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa-solid fa-clock"></i></a>
-                            <a href="#">Office Hours: 8AM - 11PM Sunday -
-                                Weekend Day</a>
-                        </li>
-                    </ul>
-                    <span class="d-flex gap-4 mt-4">
-                        <a href="#" class="p-0"><i class="fa-brands fa-facebook"></i></a>
-                        <a href="#" class="p-0"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="#" class="p-0"><i class="fa-brands fa-twitter"></i></a>
-                    </span>
-                </section>
-            </header>
-            <!-- ======== End of 1.1. header section ========  -->
-            <!-- ======== 1.2. hero section ======== -->
-            <section class="hero">
-                <div class="container">
-                    <div class="row text-md-start text-sm-center text-center gap-md-0 gap-sm-4 gap-5">
-                        <div
-                            class="col-md-6 d-flex align-items-md-start align-items-ms-center align-items-center justify-content-center flex-column">
-                            <!-- <h1>sfdsfsfssd</h1> -->
-                            <h1>EMPOWER YOUR FINANCES</h1>
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                                Ipsum has
-                                been the industry's standard dummy text ever since the 1500s.</p>
-                            <a class="btn-hover1" href="about.html">Get the Card</a>
-                        </div>
-                        <div
-                            class="col-md-6 position-relative d-flex flex-column justify-content-center align-items-center mt-md-0 mt-sm-5 mt-4">
-                            <img src="main_assets/images/index/hero.png" alt="hero_img1" class="moving">
-                            <img src="main_assets/images/index/hero_watch.png" alt="hero_img2">
-                            <img src="main_assets/images/icon/hero_star.png" alt="hero_icon">
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <!-- ======== End of 1.2. hero section ========  -->
-            <!-- ======== 1.3. about section ========  -->
-            <section class="about">
-                <div class="container">
-                    <div class="row text-md-start text-sm-center text-center">
-                        <div class="col-md-6 d-flex justify-content-between">
-                            <div class="ab_card1">
-                                <h3>About</h3>
-                                <p class="p-f-s">Lorem Ipsum is simply dummy text of the printing and typesetting
-                                    industry. Lorem
-                                    Ipsum
-                                    has
-                                    been the industry’s standard dummy text ever since the 1500s, when an unknown
-                                    printer
-                                    took a
-                                    galley of type and scrambled.</p>
-                                <div
-                                    class="d-flex align-items-center justify-content-lg-start justify-content-md-center justify-content-center">
-                                    <a class="btn-hover1" href="about.html">Learn More</a>
-                                    <div class="abut-video">
-                                        <a class="video-play-button" href="#">
-                                            <span class="fa-solid fa-play"></span>
-                                        </a>
-
-                                    </div>
-                                    <div class="p-f-s w-v">Watch Video</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 d-flex justify-content-center mt-md-0 mt-sm-3 mt-3">
-                            <div class="ab_card2 d-flex flex-column justify-content-between">
-                                <div>
-                                    <div class="row gap-md-0 gap-sm-3 gap-3">
-                                        <div class="col-md-5 col-sm-12 col-12 ">
-                                            <div
-                                                class="d-flex justify-content-md-start justify-content-sm-center justify-content-center">
-                                                <h3 class="count">38</h3>
-                                                <h3>M+</h3>
-                                            </div>
-                                            <p class="p-f-s">Business have already joined us! Business have already
-                                                joined us!</p>
-                                        </div>
-                                        <div class="col-2 p-0 d-flex justify-content-center align-items-center">
-                                            <hr>
-                                        </div>
-                                        <div class="col-md-5 col-sm-12 col-12 p-0">
-                                            <h3>0%</h3>
-                                            <p class="p-f-s">Zero percent fee to any transaction Zero percent fee to
-                                                any
-                                                transaction
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div
-                                    class="d-flex mb-3 mt-4 gap-4 justify-content-md-start justify-content-ms-center justify-content-center">
-                                    <div class="position-relative">
-                                        <img src="main_assets/images/index/about_card_img1.jpg" alt="about_img1">
-                                        <img src="main_assets/images/index/about_card_img2.jpg" alt="about_img2">
-                                    </div>
-                                    <div class="ps-2">
-                                        <span>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                        </span>
-                                        <p>So many people like this service</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </div>
-
-        <slot />
-
-        <footer class="position-relative">
-            <div class="container">
-                <h4 class="text-center">SUBSCRIBE OUR NEWSLETTER</h4>
-                <p class="text-center pt-2 pb-3">Get latest News and Updates</p>
-                <form class="d-flex align-items-center justify-content-center" id="footer-sub2">
-                    <!-- form Subscribe massage -->
-                    <div id="Succes-box2"></div>
-                    <div class="d-flex footer-search ">
-                        <input type="email" name="search" placeholder="Enter your Email" required>
-                        <button type="submit" class="btn-hover1">Subscribe</button>
-                    </div>
-                </form>
-                <div class="footer-logo text-center pb-lg-4 pb-md-3 pb-sm-2 pb-4">
-                    <!-- footer logo  -->
-                    <a href="index.html">
-                        <figure><img src="main_assets/images/Logo.png" alt="img"></figure>
+    <header class="">
+        <div class="px-4 mx-auto sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 lg:h-20">
+                <div class="flex-shrink-0">
+                    <a href="#" title="" class="flex">
+                        <img class="w-auto h-8"
+                            src="https://cdn.rareblocks.xyz/collection/celebration/images/hero/2/logo.svg" alt="" />
                     </a>
                 </div>
-                <ul class="d-flex align-items-center justify-content-center">
-                    <li>
-                        <a href="#">Feature</a>
-                    </li>
-                    <li>
-                        <a href="#">Pricing</a>
-                    </li>
-                    <li>
-                        <a href="#">About us</a>
-                    </li>
-                    <li>
-                        <a href="#">Faq</a>
-                    </li>
-                </ul>
-                <hr>
-                <div class="row footer-nav-icon">
-                    <!-- footer social icon  -->
-                    <div
-                        class="col-lg-3 col-md-3 d-flex align-items-center justify-content-md-start justify-content-sm-center justify-content-center">
-                        <div
-                            class="social-icon d-flex gap-2 justify-content-md-start justify-content-sm-center justify-content-center">
-                            <a href="#"> <i class="fa-brands fa-facebook-f foot-facebook"></i></a>
-                            <a href="#"> <i class="fa-brands fa-twitter"></i></a>
-                            <a href="#"> <i class="fa-brands fa-instagram"></i></a>
-                        </div>
-                    </div>
-                    <!-- footer terms privacy  -->
-                    <div class="col-lg-6 col-md-6 d-flex justify-content-center align-items-center">
-                        <div class=" d-flex gap-3 p-2">
-                            <a href="#">Terms & Condition</a>
-                            <a href="#">Privacy Policy</a>
-                        </div>
-                    </div>
 
-                </div>
-                <hr>
-                <div class="Copyright d-flex justify-content-between flex-wrap dir">
-                    <p>Copyright © 2023 Paypath by Evonicmedia. All Right Reserved.</p>
-                    <p>Powered by Evonicsoft</p>
+                <button type="button"
+                    class="inline-flex p-1 text-black transition-all duration-200 border border-black lg:hidden focus:bg-gray-100 hover:bg-gray-100">
+                    <!-- Menu open: "hidden", Menu closed: "block" -->
+                    <svg class="block w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+
+                    <!-- Menu open: "block", Menu closed: "hidden" -->
+                    <svg class="hidden w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                        </path>
+                    </svg>
+                </button>
+
+                <div class="hidden ml-auto lg:flex lg:items-center lg:justify-center lg:space-x-10">
+                    <a href="#" title=""
+                        class="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80">
+                        Features </a>
+
+                    <a href="#" title=""
+                        class="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80">
+                        Solutions </a>
+
+                    <a href="#" title=""
+                        class="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80">
+                        Resources </a>
+
+                    <a href="#" title=""
+                        class="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80">
+                        Pricing </a>
+
+                    <div class="w-px h-5 bg-black/20"></div>
+
+                    <a href="#" title=""
+                        class="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80">
+                        Log in </a>
+
+                    <a href="#" title=""
+                        class="inline-flex items-center justify-center px-5 py-2.5 text-base font-semibold text-black border-2 border-black hover:bg-black hover:text-white transition-all duration-200 focus:bg-black focus:text-white"
+                        role="button"> Try for free </a>
                 </div>
             </div>
-        </footer>
-        <!-- ======== End of 1.13. footer section ========  -->
-    </div>
-    <!-- end site wrapper -->
+        </div>
+    </header>
+    <main>
+        <slot />
+    </main>
+    <section class="py-10 bg-gray-900 sm:pt-16 lg:pt-24">
+        <div class="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
+            <div class="grid grid-cols-2 gap-x-5 gap-y-12 md:grid-cols-4 md:gap-x-12">
+                <div>
+                    <p class="text-base text-gray-500">Company</p>
+
+                    <ul class="mt-8 space-y-4">
+                        <li>
+                            <a href="#" title=""
+                                class="text-base text-white transition-all duration-200 hover:text-opacity-80 focus:text-opacity-80">
+                                About </a>
+                        </li>
+                        <li>
+                            <a href="#" title=""
+                                class="text-base text-white transition-all duration-200 hover:text-opacity-80 focus:text-opacity-80">
+                                Features </a>
+                        </li>
+                        <li>
+                            <a href="#" title=""
+                                class="text-base text-white transition-all duration-200 hover:text-opacity-80 focus:text-opacity-80">
+                                Works </a>
+                        </li>
+                        <li>
+                            <a href="#" title=""
+                                class="text-base text-white transition-all duration-200 hover:text-opacity-80 focus:text-opacity-80">
+                                Career </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <p class="text-base text-gray-500">Help</p>
+
+                    <ul class="mt-8 space-y-4">
+                        <li>
+                            <a href="#" title=""
+                                class="text-base text-white transition-all duration-200 hover:text-opacity-80 focus:text-opacity-80">
+                                Customer Support </a>
+                        </li>
+                        <li>
+                            <a href="#" title=""
+                                class="text-base text-white transition-all duration-200 hover:text-opacity-80 focus:text-opacity-80">
+                                Delivery Details </a>
+                        </li>
+                        <li>
+                            <a href="#" title=""
+                                class="text-base text-white transition-all duration-200 hover:text-opacity-80 focus:text-opacity-80">
+                                Terms & Conditions </a>
+                        </li>
+                        <li>
+                            <a href="#" title=""
+                                class="text-base text-white transition-all duration-200 hover:text-opacity-80 focus:text-opacity-80">
+                                Privacy Policy </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <p class="text-base text-gray-500">Resources</p>
+
+                    <ul class="mt-8 space-y-4">
+                        <li>
+                            <a href="#" title=""
+                                class="text-base text-white transition-all duration-200 hover:text-opacity-80 focus:text-opacity-80">
+                                Free eBooks </a>
+                        </li>
+                        <li>
+                            <a href="#" title=""
+                                class="text-base text-white transition-all duration-200 hover:text-opacity-80 focus:text-opacity-80">
+                                Development Tutorial </a>
+                        </li>
+                        <li>
+                            <a href="#" title=""
+                                class="text-base text-white transition-all duration-200 hover:text-opacity-80 focus:text-opacity-80">
+                                How to - Blog </a>
+                        </li>
+                        <li>
+                            <a href="#" title=""
+                                class="text-base text-white transition-all duration-200 hover:text-opacity-80 focus:text-opacity-80">
+                                YouTube Playlist </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <p class="text-base text-gray-500">Extra Links</p>
+
+                    <ul class="mt-8 space-y-4">
+                        <li>
+                            <a href="#" title=""
+                                class="text-base text-white transition-all duration-200 hover:text-opacity-80 focus:text-opacity-80">
+                                Customer Support </a>
+                        </li>
+                        <li>
+                            <a href="#" title=""
+                                class="text-base text-white transition-all duration-200 hover:text-opacity-80 focus:text-opacity-80">
+                                Delivery Details </a>
+                        </li>
+                        <li>
+                            <a href="#" title=""
+                                class="text-base text-white transition-all duration-200 hover:text-opacity-80 focus:text-opacity-80">
+                                Terms & Conditions </a>
+                        </li>
+                        <li>
+                            <a href="#" title=""
+                                class="text-base text-white transition-all duration-200 hover:text-opacity-80 focus:text-opacity-80">
+                                Privacy Policy </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <hr class="mt-16 mb-10 border-gray-800" />
+
+            <div class="flex flex-wrap items-center justify-between">
+                <img class="h-8 auto md:order-1"
+                    src="https://cdn.rareblocks.xyz/collection/celebration/images/logo-alt.svg" alt="" />
+
+                <ul class="flex items-center space-x-3 md:order-3">
+                    <li>
+                        <a href="#" title=""
+                            class="flex items-center justify-center text-white transition-all duration-200 bg-transparent border border-gray-700 rounded-full w-7 h-7 focus:bg-blue-600 hover:bg-blue-600 hover:border-blue-600 focus:border-blue-600">
+                            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                fill="currentColor">
+                                <path
+                                    d="M19.633 7.997c.013.175.013.349.013.523 0 5.325-4.053 11.461-11.46 11.461-2.282 0-4.402-.661-6.186-1.809.324.037.636.05.973.05a8.07 8.07 0 0 0 5.001-1.721 4.036 4.036 0 0 1-3.767-2.793c.249.037.499.062.761.062.361 0 .724-.05 1.061-.137a4.027 4.027 0 0 1-3.23-3.953v-.05c.537.299 1.16.486 1.82.511a4.022 4.022 0 0 1-1.796-3.354c0-.748.199-1.434.548-2.032a11.457 11.457 0 0 0 8.306 4.215c-.062-.3-.1-.611-.1-.923a4.026 4.026 0 0 1 4.028-4.028c1.16 0 2.207.486 2.943 1.272a7.957 7.957 0 0 0 2.556-.973 4.02 4.02 0 0 1-1.771 2.22 8.073 8.073 0 0 0 2.319-.624 8.645 8.645 0 0 1-2.019 2.083z">
+                                </path>
+                            </svg>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" title=""
+                            class="flex items-center justify-center text-white transition-all duration-200 bg-transparent border border-gray-700 rounded-full w-7 h-7 focus:bg-blue-600 hover:bg-blue-600 hover:border-blue-600 focus:border-blue-600">
+                            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                fill="currentColor">
+                                <path
+                                    d="M13.397 20.997v-8.196h2.765l.411-3.209h-3.176V7.548c0-.926.258-1.56 1.587-1.56h1.684V3.127A22.336 22.336 0 0 0 14.201 3c-2.444 0-4.122 1.492-4.122 4.231v2.355H7.332v3.209h2.753v8.202h3.312z">
+                                </path>
+                            </svg>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" title=""
+                            class="flex items-center justify-center text-white transition-all duration-200 bg-transparent border border-gray-700 rounded-full w-7 h-7 focus:bg-blue-600 hover:bg-blue-600 hover:border-blue-600 focus:border-blue-600">
+                            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                fill="currentColor">
+                                <path
+                                    d="M11.999 7.377a4.623 4.623 0 1 0 0 9.248 4.623 4.623 0 0 0 0-9.248zm0 7.627a3.004 3.004 0 1 1 0-6.008 3.004 3.004 0 0 1 0 6.008z">
+                                </path>
+                                <circle cx="16.806" cy="7.207" r="1.078"></circle>
+                                <path
+                                    d="M20.533 6.111A4.605 4.605 0 0 0 17.9 3.479a6.606 6.606 0 0 0-2.186-.42c-.963-.042-1.268-.054-3.71-.054s-2.755 0-3.71.054a6.554 6.554 0 0 0-2.184.42 4.6 4.6 0 0 0-2.633 2.632 6.585 6.585 0 0 0-.419 2.186c-.043.962-.056 1.267-.056 3.71 0 2.442 0 2.753.056 3.71.015.748.156 1.486.419 2.187a4.61 4.61 0 0 0 2.634 2.632 6.584 6.584 0 0 0 2.185.45c.963.042 1.268.055 3.71.055s2.755 0 3.71-.055a6.615 6.615 0 0 0 2.186-.419 4.613 4.613 0 0 0 2.633-2.633c.263-.7.404-1.438.419-2.186.043-.962.056-1.267.056-3.71s0-2.753-.056-3.71a6.581 6.581 0 0 0-.421-2.217zm-1.218 9.532a5.043 5.043 0 0 1-.311 1.688 2.987 2.987 0 0 1-1.712 1.711 4.985 4.985 0 0 1-1.67.311c-.95.044-1.218.055-3.654.055-2.438 0-2.687 0-3.655-.055a4.96 4.96 0 0 1-1.669-.311 2.985 2.985 0 0 1-1.719-1.711 5.08 5.08 0 0 1-.311-1.669c-.043-.95-.053-1.218-.053-3.654 0-2.437 0-2.686.053-3.655a5.038 5.038 0 0 1 .311-1.687c.305-.789.93-1.41 1.719-1.712a5.01 5.01 0 0 1 1.669-.311c.951-.043 1.218-.055 3.655-.055s2.687 0 3.654.055a4.96 4.96 0 0 1 1.67.311 2.991 2.991 0 0 1 1.712 1.712 5.08 5.08 0 0 1 .311 1.669c.043.951.054 1.218.054 3.655 0 2.436 0 2.698-.043 3.654h-.011z">
+                                </path>
+                            </svg>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" title=""
+                            class="flex items-center justify-center text-white transition-all duration-200 bg-transparent border border-gray-700 rounded-full w-7 h-7 focus:bg-blue-600 hover:bg-blue-600 hover:border-blue-600 focus:border-blue-600">
+                            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                fill="currentColor">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M12.026 2c-5.509 0-9.974 4.465-9.974 9.974 0 4.406 2.857 8.145 6.821 9.465.499.09.679-.217.679-.481 0-.237-.008-.865-.011-1.696-2.775.602-3.361-1.338-3.361-1.338-.452-1.152-1.107-1.459-1.107-1.459-.905-.619.069-.605.069-.605 1.002.07 1.527 1.028 1.527 1.028.89 1.524 2.336 1.084 2.902.829.091-.645.351-1.085.635-1.334-2.214-.251-4.542-1.107-4.542-4.93 0-1.087.389-1.979 1.024-2.675-.101-.253-.446-1.268.099-2.64 0 0 .837-.269 2.742 1.021a9.582 9.582 0 0 1 2.496-.336 9.554 9.554 0 0 1 2.496.336c1.906-1.291 2.742-1.021 2.742-1.021.545 1.372.203 2.387.099 2.64.64.696 1.024 1.587 1.024 2.675 0 3.833-2.33 4.675-4.552 4.922.355.308.675.916.675 1.846 0 1.334-.012 2.41-.012 2.737 0 .267.178.577.687.479C19.146 20.115 22 16.379 22 11.974 22 6.465 17.535 2 12.026 2z">
+                                </path>
+                            </svg>
+                        </a>
+                    </li>
+                </ul>
+
+                <p class="w-full mt-8 text-sm text-center text-gray-100 md:mt-0 md:w-auto md:order-2">© Copyright 2021,
+                    All Rights Reserved by Postcraft</p>
+            </div>
+        </div>
+    </section>
+
 
 
 
