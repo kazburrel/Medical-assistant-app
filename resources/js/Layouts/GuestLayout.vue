@@ -1,67 +1,130 @@
 <script setup>
+import { ref, onMounted, onUnmounted } from 'vue';
+import { Link } from '@inertiajs/vue3';
 
+const isMenuOpen = ref(false);
+const isScrolled = ref(false);
+
+const toggleMenu = () => {
+    isMenuOpen.value = !isMenuOpen.value;
+};
+
+const handleScroll = () => {
+    isScrolled.value = window.scrollY > 0;
+};
+
+onMounted(() => {
+    window.addEventListener('scroll', handleScroll);
+});
+
+onUnmounted(() => {
+    window.removeEventListener('scroll', handleScroll);
+});
 </script>
 
 <template>
-
-
-    <header class="">
-        <div class="px-4 mx-auto sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16 lg:h-20">
+    <header
+        :class="isScrolled ? 'fixed top-0 left-0 w-full bg-white bg-opacity-90 shadow-md z-50' : 'pb-6 bg-white lg:pb-0'">
+        <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+            <!-- lg+ -->
+            <nav class="flex items-center justify-between h-16 lg:h-20">
                 <div class="flex-shrink-0">
                     <a href="#" title="" class="flex">
-                        <img class="w-auto h-8"
-                            src="https://cdn.rareblocks.xyz/collection/celebration/images/hero/2/logo.svg" alt="" />
+                        <img class="w-auto h-8 lg:h-10"
+                            src="https://cdn.rareblocks.xyz/collection/celebration/images/logo.svg" alt="" />
                     </a>
                 </div>
 
-                <button type="button"
-                    class="inline-flex p-1 text-black transition-all duration-200 border border-black lg:hidden focus:bg-gray-100 hover:bg-gray-100">
+                <button @click="toggleMenu" type="button"
+                    class="inline-flex p-2 text-black transition-all duration-200 rounded-md lg:hidden focus:bg-gray-100 hover:bg-gray-100">
                     <!-- Menu open: "hidden", Menu closed: "block" -->
-                    <svg class="block w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 6h16M4 12h16M4 18h16" />
+                    <svg :class="isMenuOpen ? 'hidden' : 'block'" class="w-6 h-6" xmlns="http://www.w3.org/2000/svg"
+                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16" />
                     </svg>
 
                     <!-- Menu open: "block", Menu closed: "hidden" -->
-                    <svg class="hidden w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
-                        </path>
+                    <svg :class="isMenuOpen ? 'block' : 'hidden'" class="w-6 h-6" xmlns="http://www.w3.org/2000/svg"
+                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
 
-                <div class="hidden ml-auto lg:flex lg:items-center lg:justify-center lg:space-x-10">
+                <div class="hidden lg:flex lg:items-center lg:ml-auto lg:space-x-10">
                     <a href="#" title=""
-                        class="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80">
+                        class="text-base font-medium text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600">
                         Features </a>
 
                     <a href="#" title=""
-                        class="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80">
+                        class="text-base font-medium text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600">
                         Solutions </a>
 
                     <a href="#" title=""
-                        class="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80">
+                        class="text-base font-medium text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600">
                         Resources </a>
 
                     <a href="#" title=""
-                        class="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80">
+                        class="text-base font-medium text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600">
                         Pricing </a>
-
-                    <div class="w-px h-5 bg-black/20"></div>
-
-                    <a href="#" title=""
-                        class="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80">
-                        Log in </a>
-
-                    <a href="#" title=""
-                        class="inline-flex items-center justify-center px-5 py-2.5 text-base font-semibold text-black border-2 border-black hover:bg-black hover:text-white transition-all duration-200 focus:bg-black focus:text-white"
-                        role="button"> Try for free </a>
                 </div>
-            </div>
+
+                <div class="hidden lg:flex lg:items-center lg:ml-auto lg:space-x-10">
+                    <Link :href="route('login')" class="flex items-center font-medium text-black hover:text-blue-600">
+                    Log In</Link>
+
+                    <Link :href="route('register')"
+                        class="flex items-center font-medium text-black hover:text-blue-600">Get started now
+                    </Link>
+                </div>
+
+                <!-- <div class="hidden lg:flex lg:items-center lg:ml-auto lg:space-x-10">
+
+                </div> -->
+
+                <!-- <a href="#" title=""
+                    class="items-center justify-center hidden px-4 py-3 ml-10 text-base font-semibold text-white transition-all duration-200 bg-blue-600 border border-transparent rounded-md lg:inline-flex hover:bg-blue-700 focus:bg-blue-700"
+                    role="button">  4</a> -->
+            </nav>
+
+            <!-- xs to lg -->
+            <nav :class="isMenuOpen ? 'block' : 'hidden'"
+                class="pt-4 pb-6 bg-white border border-gray-200 rounded-md shadow-md lg:hidden">
+                <div class="flow-root">
+                    <div class="flex flex-col px-6 -my-2 space-y-1">
+                        <a href="#" title=""
+                            class="inline-flex py-2 text-base font-medium text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600">
+                            Features </a>
+
+                        <a href="#" title=""
+                            class="inline-flex py-2 text-base font-medium text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600">
+                            Solutions </a>
+
+                        <a href="#" title=""
+                            class="inline-flex py-2 text-base font-medium text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600">
+                            Resources </a>
+
+                        <a href="#" title=""
+                            class="inline-flex py-2 text-base font-medium text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600">
+                            Pricing </a>
+                    </div>
+                </div>
+                <div class="flow-root">
+                    <Link :href="route('login')" class="flex items-center font-medium text-black">Log In</Link>
+                </div>
+
+
+                <div class="px-6 mt-6">
+                    <a href="#" title=""
+                        class="inline-flex justify-center px-4 py-3 text-base font-semibold text-white transition-all duration-200 bg-blue-600 border border-transparent rounded-md tems-center hover:bg-blue-700 focus:bg-blue-700"
+                        role="button"> Get started now </a>
+                </div>
+            </nav>
         </div>
     </header>
+
+
+
     <main>
         <slot />
     </main>
