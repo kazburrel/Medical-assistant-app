@@ -1,6 +1,27 @@
 <script setup>
+import { Link, useForm } from '@inertiajs/vue3';
+import { ref } from 'vue';
+const showAlert = ref(true);
+if (localStorage.getItem('alertClosed')) {
+    showAlert.value = false;
+}
 
-
+const closeAlert = () => {
+    showAlert.value = false;
+    localStorage.setItem('alertClosed', 'true');
+};
+const form = useForm({});
+const logout = () => {
+    form.post(route('logout'), {
+        onSuccess: () => {
+            localStorage.removeItem('alertClosed');
+        },
+        onError: (errors) => {
+            console.error('Logout failed:', errors);
+        }
+    });
+};
+const containerClass = ref(''); 
 </script>
 
 <template>
@@ -17,7 +38,8 @@
             </div>
             <nav
                 class="flex min-w-[240px] flex-col gap-1 p-2 font-sans text-base font-normal text-blue-gray-700 h-full">
-                <div class="relative block w-full">
+                <div class="relative block w-full bg-gray-200 bg-opacity-50"
+                    :class="{ 'bg-grey-200 rounded': route().current('dashboard') }">
                     <div role="button"
                         class="flex items-center w-full p-0 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
                         <button type="button"
@@ -30,10 +52,10 @@
                                         clip-rule="evenodd"></path>
                                 </svg>
                             </div>
-                            <p
+                            <Link :href="route('dashboard')"
                                 class="block mr-auto font-sans text-base antialiased font-normal leading-relaxed text-blue-gray-900">
-                                Dashboard
-                            </p>
+                            Dashboard
+                            </Link>
                         </button>
                     </div>
                 </div>
@@ -64,7 +86,7 @@
                         </div>
                         Settings
                     </div>
-                    <div role="button"
+                    <div @click="logout" role="button"
                         class="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
                         <div class="grid mr-4 place-items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
@@ -75,10 +97,11 @@
                             </svg>
                         </div>
                         Log Out
+
                     </div>
                 </div>
             </nav>
-            <div role="alert"
+            <div v-if="showAlert" role="alert"
                 class="relative flex w-full px-4 py-4 mt-auto text-base text-white bg-gray-900 rounded-lg font-regular">
                 <div class="mr-12">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -105,7 +128,8 @@
                         </a>
                     </div>
                 </div>
-                <button
+
+                <button @click="closeAlert"
                     class="!absolute  top-3 right-3 h-8 max-h-[32px] w-8 max-w-[32px] select-none rounded-lg text-center align-middle font-sans text-xs font-medium uppercase text-white transition-all hover:bg-white/10 active:bg-white/30 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                     type="button">
                     <span class="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
