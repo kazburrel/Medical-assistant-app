@@ -25,6 +25,10 @@ const submit = () => {
         onFinish: () => form.reset('password'),
     });
 };
+const redirectToGoogle = () => {
+    window.location.href = route('google.redirect');
+};
+
 </script>
 
 <template>
@@ -108,9 +112,12 @@ const submit = () => {
                 class="flex items-center justify-center px-4 py-10 bg-white sm:px-6 lg:px-8 sm:py-16 lg:py-24 h-full w-full">
                 <div class="xl:w-full xl:max-w-sm 2xl:max-w-md xl:mx-auto">
                     <h2 class="text-3xl font-bold leading-tight text-black sm:text-4xl">Sign in to Celebration</h2>
-                    <p class="mt-2 text-base text-gray-600">Don’t have an account? <a href="#" title=""
-                            class="font-medium text-blue-600 transition-all duration-200 hover:text-blue-700 focus:text-blue-700 hover:underline">Create
-                            a free account</a></p>
+                    <p class="mt-2 text-base text-gray-600">Don’t have an account?
+                        <Link :href="route('register')"
+                            class="font-medium text-blue-600 transition-all duration-200 hover:text-blue-700 focus:text-blue-700 hover:underline">
+                        Create
+                        a free account</Link>
+                    </p>
 
                     <form @submit.prevent="submit" class="mt-8">
                         <div class="space-y-5">
@@ -168,7 +175,7 @@ const submit = () => {
                     </form>
 
                     <div class="mt-3 space-y-3">
-                        <button type="button"
+                        <button @click="redirectToGoogle"
                             class="relative inline-flex items-center justify-center w-full px-4 py-4 text-base font-semibold text-gray-700 transition-all duration-200 bg-white border-2 border-gray-200 rounded-md hover:bg-gray-100 focus:bg-gray-100 hover:text-black focus:text-black focus:outline-none">
                             <div class="absolute inset-y-0 left-0 p-4">
                                 <svg class="w-6 h-6 text-rose-500" xmlns="http://www.w3.org/2000/svg"

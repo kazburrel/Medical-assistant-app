@@ -15,9 +15,12 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('fname');
             $table->string('lname');
-            $table->date('birthday');
+            $table->date('birthday')->nullable();
             $table->string('email')->unique();
-            $table->string('password');
+            $table->string('password')->nullable();
+            $table->string('provider')->nullable();
+            $table->string('provider_id')->nullable();
+            $table->string('provider_token')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamps();
         });
