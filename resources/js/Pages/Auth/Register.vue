@@ -1,8 +1,16 @@
 <script setup>
+import { ref, computed } from 'vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
-import InputError from '@/Components/InputError.vue';
+import axios from 'axios';
 import AuthenticationLayout from '@/Layouts/AuthenticationLayout.vue';
+
 defineOptions({ layout: AuthenticationLayout });
+defineProps({
+    error: {
+        type: String,
+        default: '',
+    },
+});
 
 const form = useForm({
     fname: '',
@@ -13,10 +21,91 @@ const form = useForm({
     password_confirmation: '',
 });
 
-const submit = () => {
-    form.post(route('register'), {
-        onFinish: () => form.reset('password', 'password_confirmation'),
-    });
+const currentStep = ref(1);
+const totalSteps = 3;
+
+const progress = computed(() => (currentStep.value / totalSteps) * 100);
+
+const validateStep = async () => {
+    let isValid = true;
+    form.errors = {};
+
+    if (currentStep.value === 1) {
+        if (!form.fname || typeof form.fname !== 'string' || form.fname.length > 255) {
+            isValid = false;
+            form.errors.fname = 'First name is required and must be less than 255 characters.';
+        }
+        if (!form.lname || typeof form.lname !== 'string' || form.lname.length > 255) {
+            isValid = false;
+            form.errors.lname = 'Last name is required and must be less than 255 characters.';
+        }
+    } else if (currentStep.value === 2) {
+        if (!form.birthday) {
+            isValid = false;
+            form.errors.birthday = 'Birthday is required.';
+        }
+        if (!form.email || typeof form.email !== 'string' || form.email.length > 255) {
+            isValid = false;
+            if (!form.email) {
+                form.errors.email = 'Email is required.';
+            } else if (form.email.length > 255) {
+                form.errors.email = 'Email must be less than 255 characters.';
+            }
+        } else if (!/\S+@\S+\.\S+/.test(form.email)) {
+            isValid = false;
+            form.errors.email = 'Please enter a valid email address.';
+        } else {
+            // Check if email exists
+            const emailExists = await checkEmail();
+            if (emailExists) {
+                isValid = false;
+                form.errors.email = 'Email already exists.';
+            }
+        }
+    } else if (currentStep.value === 3) {
+        if (!form.password || !form.password_confirmation) {
+            isValid = false;
+            form.errors.password = 'Password and Password Confirmation are required.';
+        } else if (form.password !== form.password_confirmation) {
+            isValid = false;
+            form.errors.password_confirmation = 'Passwords do not match.';
+        }
+    }
+    return isValid;
+};
+
+async function checkEmail() {
+    try {
+        const response = await axios.get(route('check-email'), {
+            params: { email: form.email }
+        });
+        return response.data.emailExists;
+    } catch (error) {
+        form.errors.email = 'Error checking email.';
+        return false;
+    }
+}
+
+const nextStep = async () => {
+    if (await validateStep() && currentStep.value < totalSteps) {
+        currentStep.value++;
+    }
+};
+
+const prevStep = () => {
+    if (currentStep.value > 1) currentStep.value--;
+};
+
+const submit = async () => {
+    if (await validateStep()) {
+        form.post(route('register'), {
+            onFinish: () => form.reset('password', 'password_confirmation'),
+        });
+    }
+};
+
+const redirectToGoogle = () => {
+    window.location.href = route('google.redirect');
 };
 </script>
 
@@ -101,117 +190,99 @@ const submit = () => {
                             class="font-medium text-blue-600 transition-all duration-200 hover:text-blue-700 focus:text-blue-700 hover:underline">
                         Login</Link>
                     </p>
-
+                    <div class="w-full bg-gray-200 rounded-full h-2.5 mt-4">
+                        <div :style="{ width: progress + '%' }" class="bg-blue-600 h-2.5 rounded-full"></div>
+                    </div>
                     <form @submit.prevent="submit" class="mt-8">
-                        <div class="space-y-5">
+                        <div v-if="currentStep === 1" class="space-y-5">
                             <div>
                                 <label for="" class="text-base font-medium text-gray-900"> First name </label>
                                 <div class="mt-2.5 relative text-gray-400 focus-within:text-gray-600">
-                                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                        <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                            viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                        </svg>
-                                    </div>
-
                                     <input type="text" v-model="form.fname" placeholder="Enter your first name"
                                         class="block w-full py-4 pl-10 pr-4 text-black placeholder-gray-500 transition-all duration-200 border border-gray-200 rounded-md bg-gray-50 focus:outline-none focus:border-blue-600 focus:bg-white caret-blue-600" />
-                                    <InputError :error="form.errors.fname" />
+                                    <div v-if="form.errors.fname" class="text-red-600 text-sm mt-1">
+                                        {{ form.errors.fname }}
+                                    </div>
                                 </div>
                             </div>
-
                             <div>
-                                <label for="" class="text-base font-medium text-gray-900"> last name </label>
+                                <label for="" class="text-base font-medium text-gray-900"> Last name </label>
                                 <div class="mt-2.5 relative text-gray-400 focus-within:text-gray-600">
-                                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                        <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                            viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                        </svg>
-                                    </div>
-
                                     <input type="text" v-model="form.lname" placeholder="Enter your last name"
                                         class="block w-full py-4 pl-10 pr-4 text-black placeholder-gray-500 transition-all duration-200 border border-gray-200 rounded-md bg-gray-50 focus:outline-none focus:border-blue-600 focus:bg-white caret-blue-600" />
-                                    <InputError :error="form.errors.lname" />
+                                    <div v-if="form.errors.lname" class="text-red-600 text-sm mt-1">
+                                        {{ form.errors.lname }}
+                                    </div>
                                 </div>
                             </div>
+                            <button type="button" @click="nextStep"
+                                class="inline-flex items-center justify-center w-full px-4 py-4 text-base font-semibold text-white transition-all duration-200 border border-transparent rounded-md bg-gradient-to-r from-fuchsia-600 to-blue-600 focus:outline-none hover:opacity-80 focus:opacity-80">
+                                Next
+                            </button>
+                        </div>
 
+                        <div v-if="currentStep === 2" class="space-y-5">
                             <div>
                                 <label for="" class="text-base font-medium text-gray-900"> Birthday </label>
                                 <div class="mt-2.5 relative text-gray-400 focus-within:text-gray-600">
-                                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                        <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                            viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M12 9a5 5 0 00-5 5h10a5 5 0 00-5-5z" />
-                                        </svg>
-                                    </div>
-
                                     <input type="date" v-model="form.birthday" placeholder="Enter your birthday"
                                         class="block w-full py-4 pl-10 pr-4 text-black placeholder-gray-500 transition-all duration-200 border border-gray-200 rounded-md bg-gray-50 focus:outline-none focus:border-blue-600 focus:bg-white caret-blue-600" />
-                                    <InputError :error="form.errors.birthday" />
+                                    <div v-if="form.errors.birthday" class="text-red-600 text-sm mt-1">
+                                        {{ form.errors.birthday }}
+                                    </div>
                                 </div>
                             </div>
-
                             <div>
                                 <label for="" class="text-base font-medium text-gray-900"> Email address </label>
                                 <div class="mt-2.5 relative text-gray-400 focus-within:text-gray-600">
-                                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                        <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                            viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
-                                        </svg>
-                                    </div>
-
                                     <input type="email" v-model="form.email" placeholder="Enter email to get started"
                                         class="block w-full py-4 pl-10 pr-4 text-black placeholder-gray-500 transition-all duration-200 border border-gray-200 rounded-md bg-gray-50 focus:outline-none focus:border-blue-600 focus:bg-white caret-blue-600" />
-                                    <InputError :error="form.errors.email" />
+                                    <div v-if="form.errors.email" class="text-red-600 text-sm mt-1">
+                                        {{ form.errors.email }}
+                                    </div>
                                 </div>
                             </div>
+                            <div class="flex justify-between">
+                                <button type="button" @click="prevStep"
+                                    class="inline-flex items-center justify-center w-full px-4 py-4 text-base font-semibold text-white transition-all duration-200 border border-transparent rounded-md bg-gradient-to-r from-fuchsia-600 to-blue-600 focus:outline-none hover:opacity-80 focus:opacity-80 mr-2">
+                                    Previous
+                                </button>
+                                <button type="button" @click="nextStep"
+                                    class="inline-flex items-center justify-center w-full px-4 py-4 text-base font-semibold text-white transition-all duration-200 border border-transparent rounded-md bg-gradient-to-r from-fuchsia-600 to-blue-600 focus:outline-none hover:opacity-80 focus:opacity-80 ml-2">
+                                    Next
+                                </button>
+                            </div>
+                        </div>
 
+                        <div v-if="currentStep === 3" class="space-y-5">
                             <div>
                                 <label for="" class="text-base font-medium text-gray-900"> Password </label>
                                 <div class="mt-2.5 relative text-gray-400 focus-within:text-gray-600">
-                                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                        <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                            viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.132A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.39-2.823 1.07-4" />
-                                        </svg>
-                                    </div>
-
                                     <input type="password" v-model="form.password" placeholder="Enter your password"
                                         class="block w-full py-4 pl-10 pr-4 text-black placeholder-gray-500 transition-all duration-200 border border-gray-200 rounded-md bg-gray-50 focus:outline-none focus:border-blue-600 focus:bg-white caret-blue-600" />
-                                    <InputError :error="form.errors.password" />
+                                    <div v-if="form.errors.password" class="text-red-600 text-sm mt-1">
+                                        {{ form.errors.password }}
+                                    </div>
                                 </div>
                             </div>
-
                             <div>
                                 <label for="" class="text-base font-medium text-gray-900">Confirm Password </label>
                                 <div class="mt-2.5 relative text-gray-400 focus-within:text-gray-600">
-                                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                        <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                            viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.132A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.39-2.823 1.07-4" />
-                                        </svg>
-                                    </div>
-
                                     <input type="password" v-model="form.password_confirmation"
                                         placeholder="Enter your password again"
                                         class="block w-full py-4 pl-10 pr-4 text-black placeholder-gray-500 transition-all duration-200 border border-gray-200 rounded-md bg-gray-50 focus:outline-none focus:border-blue-600 focus:bg-white caret-blue-600" />
-                                    <InputError :error="form.errors.password_confirmation" />
+                                    <div v-if="form.errors.password_confirmation" class="text-red-600 text-sm mt-1">
+                                        {{ form.errors.password_confirmation }}
+                                    </div>
                                 </div>
                             </div>
-
-                            <div>
+                            <div class="flex justify-between">
+                                <button type="button" @click="prevStep"
+                                    class="inline-flex items-center justify-center w-full px-4 py-4 text-base font-semibold text-white transition-all duration-200 border border-transparent rounded-md bg-gradient-to-r from-fuchsia-600 to-blue-600 focus:outline-none hover:opacity-80 focus:opacity-80 mr-2">
+                                    Previous
+                                </button>
                                 <button type="submit"
-                                    class="inline-flex items-center justify-center w-full px-4 py-4 text-base font-semibold text-white transition-all duration-200 border border-transparent rounded-md bg-gradient-to-r from-fuchsia-600 to-blue-600 focus:outline-none hover:opacity-80 focus:opacity-80">
+                                    class="inline-flex items-center justify-center w-full px-4 py-4 text-base font-semibold text-white transition-all duration-200 border border-transparent rounded-md bg-gradient-to-r from-fuchsia-600 to-blue-600 focus:outline-none hover:opacity-80 focus:opacity-80 ml-2">
                                     Sign up
                                 </button>
                             </div>
@@ -219,7 +290,7 @@ const submit = () => {
                     </form>
 
                     <div class="mt-3 space-y-3">
-                        <button type="button"
+                        <button @click="redirectToGoogle"
                             class="relative inline-flex items-center justify-center w-full px-4 py-4 text-base font-semibold text-gray-700 transition-all duration-200 bg-white border-2 border-gray-200 rounded-md hover:bg-gray-100 focus:bg-gray-100 hover:text-black focus:text-black focus:outline-none">
                             <div class="absolute inset-y-0 left-0 p-4">
                                 <svg class="w-6 h-6 text-rose-500" xmlns="http://www.w3.org/2000/svg"
@@ -229,7 +300,7 @@ const submit = () => {
                                     </path>
                                 </svg>
                             </div>
-                            Sign up with Google
+                            Sign in with Google
                         </button>
 
                         <button type="button"

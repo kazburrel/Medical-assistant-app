@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Laravel\Socialite\Facades\Socialite;
 
 class SocialiteLoginController extends Controller
@@ -18,7 +19,13 @@ class SocialiteLoginController extends Controller
 
     public function handleGoogleCallback()
     {
-        $socialUser = Socialite::driver('google')->user();
+        try {
+            $socialUser = Socialite::driver('google')->user();
+        } catch (\Exception $e) {
+            Log::error('Socialite error: ' . $e->getMessage());
+            return redirect()->route('login')->withErrors(['msg' => 'Unable to login using Google. Please try again.']);
+        }
+
         $user = User::where('email', $socialUser->email)->first();
         $user = User::updateOrCreate([
             'provider_id' => $socialUser->id,
