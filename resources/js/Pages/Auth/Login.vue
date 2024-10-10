@@ -134,17 +134,15 @@ const redirectToGoogle = () => {
 
                                     <input type="email" v-model="form.email" placeholder="Enter email to get started"
                                         class="block w-full py-4 pl-10 pr-4 text-black placeholder-gray-500 transition-all duration-200 border border-gray-200 rounded-md bg-gray-50 focus:outline-none focus:border-blue-600 focus:bg-white caret-blue-600" />
-                                    <InputError :error="form.errors.email" />
+                                    <div v-if="form.errors.email" class="text-red-600 text-sm mt-1">
+                                        {{ form.errors.email }}
+                                    </div>
                                 </div>
                             </div>
 
                             <div>
                                 <div class="flex items-center justify-between">
                                     <label class="text-base font-medium text-gray-900"> Password </label>
-
-                                    <!-- <a href="#" title=""
-                                        class="text-sm font-medium text-blue-600 transition-all duration-200 hover:text-blue-700 focus:text-blue-700 hover:underline">
-                                        Forgot password? </a> -->
                                     <Link
                                         class="text-sm font-medium text-blue-600 transition-all duration-200 hover:text-blue-700 focus:text-blue-700 hover:underline"
                                         :href="route('password.request')">Forgot password

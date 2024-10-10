@@ -31,13 +31,26 @@ const validateStep = async () => {
     form.errors = {};
 
     if (currentStep.value === 1) {
-        if (!form.fname || typeof form.fname !== 'string' || form.fname.length > 255) {
+        if (!form.fname) {
             isValid = false;
-            form.errors.fname = 'First name is required and must be less than 255 characters.';
+            form.errors.fname = 'First name is required.';
+        } else if (typeof form.fname !== 'string') {
+            isValid = false;
+            form.errors.fname = 'First name must be a string.';
+        } else if (form.fname.length > 255) {
+            isValid = false;
+            form.errors.fname = 'First name must be less than 255 characters.';
         }
-        if (!form.lname || typeof form.lname !== 'string' || form.lname.length > 255) {
+
+        if (!form.lname) {
             isValid = false;
-            form.errors.lname = 'Last name is required and must be less than 255 characters.';
+            form.errors.lname = 'Last name is required.';
+        } else if (typeof form.lname !== 'string') {
+            isValid = false;
+            form.errors.lname = 'Last name must be a string.';
+        } else if (form.lname.length > 255) {
+            isValid = false;
+            form.errors.lname = 'Last name must be less than 255 characters.';
         }
     } else if (currentStep.value === 2) {
         if (!form.birthday) {
