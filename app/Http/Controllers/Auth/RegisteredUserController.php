@@ -30,7 +30,7 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        // dd($request);
+
         $request->validate([
             'fname' => 'required|string|max:255',
             'lname' => 'required|string|max:255',
