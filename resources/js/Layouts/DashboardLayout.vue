@@ -19,7 +19,7 @@ const containerClass = ref('');
                 </div>
             </header>
 
-
+            <!-- Page Content -->
             <main>
                 <slot />
             </main>
