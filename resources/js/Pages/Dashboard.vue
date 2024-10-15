@@ -6,7 +6,8 @@ import { inject, ref, watchEffect } from 'vue';
 defineOptions({ layout: DashboardLayout });
 
 const form = useForm({
-    prompt: '',
+    query_type: '',
+    content: '',
 });
 
 const submitPrompt = () => {
@@ -19,8 +20,6 @@ const submitPrompt = () => {
     });
 };
 
-// Inject the isDarkMode state from the layout
-const isDarkMode = inject('isDarkMode');
 
 // Define the missing properties
 const isSubmitting = ref(false);
@@ -30,25 +29,8 @@ const props = defineProps({
     content: String
 });
 
-// Typing effect for content
-const displayedContent = ref('');
-let typingIndex = 0;
 
-watchEffect(() => {
-    if (props.content) {
-        displayedContent.value = '';
-        typingIndex = 0;
-        typeContent();
-    }
-});
 
-const typeContent = () => {
-    if (typingIndex < props.content.length) {
-        displayedContent.value += props.content.charAt(typingIndex);
-        typingIndex++;
-        setTimeout(typeContent, 50);
-    }
-};
 
 </script>
 
@@ -59,8 +41,58 @@ const typeContent = () => {
     <template>
         <h2 :class="['fw-semibold fs-4', isDarkMode ? 'text-white' : 'text-dark']">Dashboard</h2>
     </template>
-    <section class="grid place-items-center">
-        <!-- component -->
+
+    <section class="relative py-10 bg-gray-900 sm:py-16 lg:py-24">
+        <div class="absolute inset-0">
+            <img class="object-cover w-full h-full"
+                src="https://cdn.rareblocks.xyz/collection/celebration/images/signup/2/woman-working-laptop.jpg"
+                alt="" />
+        </div>
+        <div class="absolute inset-0 bg-gray-900/20"></div>
+
+        <div class="relative max-w-lg px-4 mx-auto sm:px-0">
+            <div class="overflow-hidden bg-white rounded-md shadow-md">
+                <div class="px-4 py-6 sm:px-8 sm:py-7">
+                    <div class="text-center">
+                        <h2 class="text-3xl font-bold text-gray-900">Create an account</h2>
+                        <p class="mt-2 text-base text-gray-600">Already joined? <a href="#" title=""
+                                class="text-blue-600 transition-all duration-200 hover:underline hover:text-blue-700">Sign
+                                in now</a></p>
+                    </div>
+
+                    <form @submit.prevent="submitPrompt" class="mt-8">
+                        <div class="space-y-5">
+                            <div>
+                                <label for="query_type" class="text-base font-medium text-gray-900"> Query Type </label>
+                                <div class="mt-2.5">
+                                    <input v-model="form.query_type" type="text" name="query_type" id="query_type"
+                                        placeholder="Enter query type"
+                                        class="block w-full p-4 text-black placeholder-gray-500 transition-all duration-200 bg-white border border-gray-200 rounded-md focus:outline-none focus:border-blue-600 caret-blue-600" />
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="content" class="text-base font-medium text-gray-900"> Content </label>
+                                <div class="mt-2.5">
+                                    <textarea v-model="form.content" name="content" id="content"
+                                        placeholder="Enter content"
+                                        class="block w-full p-4 text-black placeholder-gray-500 transition-all duration-200 bg-white border border-gray-200 rounded-md focus:outline-none focus:border-blue-600 caret-blue-600"></textarea>
+                                </div>
+                            </div>
+
+                            <div>
+                                <button type="submit"
+                                    class="inline-flex items-center justify-center w-full px-4 py-4 text-base font-semibold text-white transition-all duration-200 bg-blue-600 border border-transparent rounded-md focus:outline-none hover:bg-blue-700 focus:bg-blue-700">Sign
+                                    up</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- <section class="grid place-items-center">
         <div class="flex h-screen antialiased text-gray-800">
             <div class="flex flex-row h-full w-full overflow-x-hidden">
 
@@ -271,5 +303,5 @@ const typeContent = () => {
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
 </template>

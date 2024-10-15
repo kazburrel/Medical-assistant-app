@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Guideline;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use OpenAI;
@@ -10,6 +11,17 @@ class PromptController extends Controller
 {
     public function submit(Request $request)
     {
+        // Insert the data into the guidelines table
+        $instruction = new \App\Models\Instruction();
+        $instruction->query_type = $request->input('query_type');
+        $instruction->content = $request->input('content');
+        $instruction->created_at = now();
+        $instruction->updated_at = now();
+        $instruction->save();
+
+        // Debug and display the inserted data
+        dd($instruction);
+
         // Validate the incoming request
         $request->validate([
             'prompt' => 'required|string',
