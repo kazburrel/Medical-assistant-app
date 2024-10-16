@@ -1,13 +1,16 @@
 <script setup>
 import DashboardLayout from '@/Layouts/DashboardLayout.vue';
 import { Head, useForm, usePage } from '@inertiajs/vue3';
-import { inject, ref, watchEffect } from 'vue';
+import { ref } from 'vue';
 
 defineOptions({ layout: DashboardLayout });
 
 const form = useForm({
     query_type: '',
     content: '',
+    prompt: '',
+    misspelled_queries: false,
+    result: '',
 });
 
 const submitPrompt = () => {
@@ -20,6 +23,15 @@ const submitPrompt = () => {
     });
 };
 
+const submitQuery = () => {
+    isSubmitting.value = true;
+    form.post(route('submit.query'), {
+        onFinish: () => {
+            form.reset();
+            isSubmitting.value = false;
+        },
+    });
+};
 
 // Define the missing properties
 const isSubmitting = ref(false);
@@ -28,9 +40,6 @@ const isSubmitting = ref(false);
 const props = defineProps({
     content: String
 });
-
-
-
 
 </script>
 
@@ -43,12 +52,12 @@ const props = defineProps({
     </template>
 
     <section class="relative py-10 bg-gray-900 sm:py-16 lg:py-24">
-        <div class="absolute inset-0">
+        <!-- <div class="absolute inset-0">
             <img class="object-cover w-full h-full"
                 src="https://cdn.rareblocks.xyz/collection/celebration/images/signup/2/woman-working-laptop.jpg"
                 alt="" />
         </div>
-        <div class="absolute inset-0 bg-gray-900/20"></div>
+        <div class="absolute inset-0 bg-gray-900/20"></div> -->
 
         <div class="relative max-w-lg px-4 mx-auto sm:px-0">
             <div class="overflow-hidden bg-white rounded-md shadow-md">
@@ -84,6 +93,83 @@ const props = defineProps({
                                 <button type="submit"
                                     class="inline-flex items-center justify-center w-full px-4 py-4 text-base font-semibold text-white transition-all duration-200 bg-blue-600 border border-transparent rounded-md focus:outline-none hover:bg-blue-700 focus:bg-blue-700">Sign
                                     up</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="relative py-10 bg-gray-900 sm:py-16 lg:py-24">
+        <div class="relative max-w-lg px-4 mx-auto sm:px-0">
+            <div class="overflow-hidden bg-white rounded-md shadow-md">
+                <div class="px-4 py-6 sm:px-8 sm:py-7">
+                    <div class="text-center">
+                        <h2 class="text-3xl font-bold text-gray-900">Submit a Prompt</h2>
+                        <p class="mt-2 text-base text-gray-600">Want to create a new prompt? Fill in the details below.
+                        </p>
+                    </div>
+
+                    <form @submit.prevent="submitQuery" class="mt-8">
+                        <div class="space-y-5">
+                            <div>
+                                <label for="prompt" class="text-base font-medium text-gray-900"> Prompt </label>
+                                <div class="mt-2.5">
+                                    <textarea v-model="form.prompt" name="prompt" id="prompt"
+                                        placeholder="Enter your prompt"
+                                        class="block w-full p-4 text-black placeholder-gray-500 transition-all duration-200 bg-white border border-gray-200 rounded-md focus:outline-none focus:border-blue-600 caret-blue-600"></textarea>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="query_type" class="text-base font-medium text-gray-900"> Query Type </label>
+                                <div class="mt-2.5">
+                                    <select v-model="form.query_type" name="query_type" id="query_type"
+                                        class="block w-full p-4 text-black placeholder-gray-500 transition-all duration-200 bg-white border border-gray-200 rounded-md focus:outline-none focus:border-blue-600 caret-blue-600">
+                                        <option value="" disabled>Select query type</option>
+                                        <option value="Artist Navigational">Artist Navigational</option>
+                                        <option value="Video Navigational">Video Navigational</option>
+                                        <option value="Record Label">Record Label</option>
+                                        <option value="Curator">Curator</option>
+                                        <option value="Genre/Category">Genre/Category</option>
+                                        <option value="Lyrics">Lyrics</option>
+                                        <option value="Editorial Radio">Editorial Radio</option>
+                                        <option value="Apple Music Hosted Radio">Apple Music Hosted Radio</option>
+                                        <option value="Broadcast Radio">Broadcast Radio</option>
+                                        <option value="Playlist Functional">Playlist Functional</option>
+                                        <option value="Playlist Navigational">Playlist Navigational</option>
+                                        <option value="Soundtrack Navigational">Soundtrack Navigational</option>
+                                        <option value="Album Functional">Album Functional</option>
+                                        <option value="Album Navigational">Album Navigational</option>
+                                        <option value="Song Functional">Song Functional</option>
+                                        <option value="Song Navigational">Song Navigational</option>
+                                        <option value="Artist Functional">Artist Functional</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="misspelled_queries" class="inline-flex items-center">
+                                    <input type="checkbox" v-model="form.misspelled_queries" id="misspelled_queries"
+                                        class="form-checkbox h-5 w-5 text-blue-600">
+                                    <span class="ml-2 text-base font-medium text-gray-900">Misspelled Queries</span>
+                                </label>
+                            </div>
+
+
+                            <div>
+                                <label for="result" class="text-base font-medium text-gray-900"> Result </label>
+                                <div class="mt-2.5">
+                                    <textarea v-model="form.result" name="result" id="result" placeholder="Enter result"
+                                        class="block w-full p-4 text-black placeholder-gray-500 transition-all duration-200 bg-white border border-gray-200 rounded-md focus:outline-none focus:border-blue-600 caret-blue-600"></textarea>
+                                </div>
+                            </div>
+
+                            <div>
+                                <button type="submit"
+                                    class="inline-flex items-center justify-center w-full px-4 py-4 text-base font-semibold text-white transition-all duration-200 bg-blue-600 border border-transparent rounded-md focus:outline-none hover:bg-blue-700 focus:bg-blue-700">Submit
+                                    Prompt</button>
                             </div>
                         </div>
                     </form>

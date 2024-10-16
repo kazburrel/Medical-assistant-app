@@ -21,6 +21,7 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 Route::post('/submit', [PromptController::class, 'submit'])->name('submit.prompt');
+Route::post('/submit/query', [PromptController::class, 'submitQuery'])->name('submit.query');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
