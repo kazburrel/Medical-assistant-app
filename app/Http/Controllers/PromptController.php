@@ -64,17 +64,11 @@ class PromptController extends Controller
                     'role' => 'user',
                     'content' => [[
                         'type' => 'text',
-                        'text' => "Apple Music is a streaming platform offering over 100 million songs, curated playlists, 
-                                  and exclusive content across all Apple devices. As a rater, your role is to evaluate user satisfaction 
-                                  and search relevance based on the user's prompt, specifically the $request->prompt. 
-                                  Key tasks include understanding the pre-classified query types, 
-                                  analyzing the primary and secondary intents of queries, and addressing any misclassifications.
-                                  Consider misspellings only when this is $misspelledInstruction->content available
-                                  in your analysis. Ratings should reflect content relevance based on intent, popularity, and recency, 
-                                  with mandatory comments explaining your rating decisions according to the guideline. 
-                                  Provide a rating for the $request->result based on the provided $request->prompt which is the intent of the user's search
-                                   and $guideline->content such as 'perfect', 'excellent', or 'good', 
-                                  along with a brief comment in simple language. No additional information is needed."
+                        'text' => " Now i want you to rate $request->prompt and the answer $request->result. 
+                        The query is a search done on apple music by a user who has an intention. the result is what apple music returned. 
+                        I will provide a guideline for you to rate the query in $request->guideline.
+                        i want you to rate it either perfect, excellent, good, acceptable, unacceptable off topic, 
+                        based on the explanation given in the guideline. Give a simple comment in a simple english of why you gave the rating. Just provide the rating and the comment nothing else!!"
                     ]]
                 ]
             ]
