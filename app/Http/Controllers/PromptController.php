@@ -63,12 +63,7 @@ class PromptController extends Controller
                     'role' => 'user',
                     'content' => [[
                         'type' => 'text',
-                        'text' => " Now i want you to rate $request->prompt and the answer $request->result. 
-                        The query is a search done on apple music by a user who has an intention. the result is what apple music returned. 
-                        I will provide a guideline for you to rate the query in $request->guideline.
-                        i want you to rate it either perfect, excellent, good, acceptable, unacceptable off topic, 
-                        based on the explanation given in the guideline. Give a simple comment quoting the guideline.(Do not forget to qute the guideline)
-                         in a simple english of why you gave the rating. Just provide the rating and the comment nothing else!!"
+                        'text' => " Now i want you to rate $request->prompt and the answer $request->result. The query is a search done on apple music by a user who has an intention. the result is what apple music returned. I will provide a guideline for you to rate the query in $request->guideline.i want you to rate it either perfect, excellent, good, acceptable, unacceptable off topic, based on the explanation given in the guideline. Also the result will always have in bracket what was returned, Could be the Artisat Page(artist), or song or albulm or playlist, make sure you read the guideline to know where those points are mentioned before rating Give a simple comment quoting the guideline.(Do not forget to qute the guideline)in a simple english of why you gave the rating. Just provide the rating and the comment nothing else!!"
                     ]]
                 ]
             ]
