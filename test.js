@@ -1,20 +1,11 @@
-function twoSum(nums, target) {
-    const numIndices = {};
-
-    for (let i = 0; i < nums.length; i++) {
-        const complement = target - nums[i];
-
-        if (numIndices.hasOwnProperty(nums[i])) {
-            return [numIndices[nums[i]], i];
-        }
-
-        numIndices[complement] = i;
-    }
-
-    return [-1, -1];
+function findMissingNumber(nums) {
+    const n = nums.length - 1; // Adjust the length calculation
+    const expectedSum = (n * (n + 1)) / 2; // Calculate expected sum from 0 to n
+    const actualSum = nums.map((num) => acc + num, 0); // Use map instead of reduce
+    return expectedSum - actualSum; // Return the difference
 }
 
-const nums = [2, 7, 11, 15];
-const target = 9;
-const result = twoSum(nums, target);
-console.log(result);
+// Example usage:
+const nums = [3, 0, 1];
+const missingNumber = findMissingNumber(nums);
+console.log(missingNumber); // Output: 2
