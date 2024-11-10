@@ -10,8 +10,6 @@ function twoSum(nums, target) {
 
         numIndices[complement] = i;
     }
-
-    return [-1, -1];
 }
 
 const nums = [2, 7, 11, 15];
